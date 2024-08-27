@@ -38,7 +38,8 @@ clear:
 
 perm: clear
 	sudo chmod -R 777 runtime
-
+	sudo chmod -R 666 migrations/*
+	sudo chmod 777 migrations
 
 ##Makefile.local
 -include Makefile.local
