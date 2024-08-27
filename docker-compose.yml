@@ -1,0 +1,49 @@
+version: '3'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  php:
+    image: yiisoftware/yii2-php:8.2-apache
+    container_name: demobook-php
+    volumes:
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+      - ./docker/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - '8080:80'
+    networks:
+      - default
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    container_name: demobook-db
+    environment:
+      - MYSQL_DATABASE=demobook
+      - MYSQL_USER=demobook
+      - MYSQL_PASSWORD=demobook_password
+      - MYSQL_ROOT_PASSWORD=root_password
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - "./docker/mysql:/var/lib/mysql"
+    networks:
+      - default
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: demobook-pma
+    ports:
+      - '8888:80'
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+    depends_on:
+      - db
