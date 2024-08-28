@@ -35,4 +35,4 @@ tests/_support/_generated
 .env
 /runtime/*
 /web/assets/*
-/docker/mysql
+/docker/mysql/

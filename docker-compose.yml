@@ -5,7 +5,7 @@ networks:
     driver: bridge
 
 services:
-  php:
+  demobook-php:
     image: yiisoftware/yii2-php:8.2-apache
     container_name: demobook-php
     volumes:
@@ -17,9 +17,9 @@ services:
     networks:
       - default
     depends_on:
-      - db
+      - demobook-db
 
-  db:
+  demobook-db:
     image: mysql:5.7
     restart: always
     container_name: demobook-db
@@ -37,13 +37,13 @@ services:
     networks:
       - default
 
-  phpmyadmin:
+  demobook-pma:
     image: phpmyadmin/phpmyadmin
     container_name: demobook-pma
     ports:
       - '8888:80'
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=db
+      - PMA_HOST=demobook-db
     depends_on:
-      - db
+      - demobook-db

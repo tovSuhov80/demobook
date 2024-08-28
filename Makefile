@@ -4,6 +4,11 @@ EXEC?=docker exec -it demobook-php
 COMPOSER=$(EXEC) composer
 DB_WAIT=$(EXEC) php -r "echo \"Waiting for db...\n\";sleep(5);"
 
+install: start wait-for-db composer-install
+	cp .env.example .env
+	$(RUN) yii migrate/up --interactive=0
+
+
 composer-install:
 	$(COMPOSER) install -n
 
@@ -25,11 +30,14 @@ migrate:
 migrate-down:
 	$(RUN) yii migrate/down
 
+migrate-down-all:
+	$(RUN) yii migrate/down 999999 --interactive=0
+
 bash:
 	$(EXEC) bash
 
 wait-for-db:
-	$(EXEC) php -r "echo \"Waiting for db...\n\";sleep(5);}"
+	$(DB_WAIT)
 
 
 clear:
