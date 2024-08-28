@@ -23,6 +23,7 @@ class Yii {
  * @property \yii\web\User|__WebUser $user
  * @property app\services\AuthorService $authorService
  * @property app\services\UserService $userService
+ * @property app\services\BookService $bookService
  *
  */
 class __Application {

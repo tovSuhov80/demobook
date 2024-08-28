@@ -37,7 +37,8 @@ class ReportController extends Controller
     {
         return $this->render('index', [
             'year' => $year,
-            'authors' => Yii::$app->authorService->getAuthorsByYear($year)
+            'authors' => Yii::$app->authorService->getTopAuthorsByYear($year),
+            'releasedYears' => Yii::$app->bookService->getReleasedYears($year),
         ]);
     }
 }

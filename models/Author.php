@@ -18,17 +18,13 @@ use yii\db\ActiveQuery;
  */
 class Author extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    public int $booksCount = 0;
+
     public static function tableName()
     {
         return '{{%authors}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -37,9 +33,6 @@ class Author extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -55,6 +48,26 @@ class Author extends \yii\db\ActiveRecord
     {
         return empty($this->middle_name) ? sprintf('%s %s', $this->first_name, $this->last_name)
             : sprintf('%s %s %s', $this->first_name, $this->middle_name, $this->last_name);
+    }
+
+    public static function fromString(string $authorString): ?Author
+    {
+        if (empty(trim($authorString))) {
+            return null;
+        }
+
+        $author = new self();
+
+        $nameParts = explode(' ', trim($authorString));
+        $author->first_name = $nameParts[0];
+        if (count($nameParts) > 2) {
+            $author->last_name = $nameParts[2];
+            $author->middle_name = $nameParts[1];
+        } else {
+            $author->last_name = $nameParts[1] ?? '';
+        }
+
+        return $author;
     }
 
     public function getBookAuthors(): ActiveQuery

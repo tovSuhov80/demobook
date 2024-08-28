@@ -36,23 +36,32 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
+
+    $navItems = [
+        ['label' => Yii::t('app','Что это?'), 'url' => ['/site/index']],
+        ['label' => Yii::t('app','Книги'), 'url' => ['/book']],
+        ['label' => Yii::t('app','Отчет ТОП 10'), 'url' => ['/report']],
+    ];
+
+    if (! Yii::$app->user->isGuest) {
+        $navItems[] = ['label' => Yii::t('app','Мои книги'), 'url' => ['/book/my']];
+    }
+
+    $navItems[] = Yii::$app->user->isGuest
+        ? ['label' => Yii::t('app', 'Войти'), 'url' => ['/user/login']]
+        : '<li class="nav-item">'
+        . Html::beginForm(['/user/logout'])
+        . Html::submitButton(
+            Yii::t('app', 'Выйти ({username})', ['username' => Yii::$app->user->identity->username]),
+            ['class' => 'nav-link btn btn-link logout']
+        )
+        . Html::endForm()
+        . '</li>';
+
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => Yii::t('app','Информация'), 'url' => ['/site/index']],
-            ['label' => Yii::t('app','Отчет ТОП 10'), 'url' => ['/report']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest
-                ? ['label' => Yii::t('app', 'Войти'), 'url' => ['/user/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/user/logout'])
-                    . Html::submitButton(
-                        Yii::t('app', 'Выйти ({username})', ['username' => Yii::$app->user->identity->username]),
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+        'items' => $navItems
     ]);
     NavBar::end();
     ?>

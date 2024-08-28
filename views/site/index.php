@@ -7,47 +7,47 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations!</h1>
+        <h1 class="display-4">Что это?</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Это маленькое Yii2-приложение, выполненое в рамках тестового задания на должность PHP backend-разработчика.</p>
 
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
     </div>
 
     <div class="body-content">
+        <h2 >Формулировка задачи</h2>
+        <div>
 
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+        <p>Необходимо сделать на фреймворке Yii2 + MySQL каталог книг. Книга может иметь несколько авторов.</p>
+        <p>
+        1. Книга - название, год выпуска, описание, isbn, фото главной страницы.<br/>
+        2. Авторы - ФИО.<br/>
+        </p>
+        <p>
+        Права на доступ:<br/>
+        1. Гость - только просмотр + подписка на новые книги автора.<br/>
+        2. Юзер - просмотр, добавление, редактирование, удаление. (CRUD). Отчет без разницы.<br/>
+        Отчет - ТОП 10 авторов выпуствиших больше книг за какой-то год.<br/>
+        </p>
         </div>
-
+        <div>
+            <h5 >ПЛЮСОМ БУДЕТ</h5>
+        <p>
+            Уведомление о поступлении книг из подписки должно отправляться на смс гостю.<br/>
+            <a href="https://smspilot.ru" target="_blank">smspilot.ru</a><br/>
+        там "Для тестирования можно использовать ключ эмулятор (реальной отправки SMS не происходит)."<br/>
+        </p>
+        </div>
+        <div>
+            <h5>Ответы на часто задаваемые вопросы/пожелания к выполнению:</h5>
+        <ul>
+            <li>Нужно сделать web приложение? не API? – web</li>
+            <li>Нужна авторизация? – да</li>
+            <li>Если нужно web приложение, откуда брать верстку? - сверстать самому, обычный bootstrap подойдет</li>
+            <li>Отчет нужен как PDF? или как отдельная страница? Если отдельная страница или PDF, то кто имеет право ее видеть? - отдельная страница, доступ для всех</li>
+            <li>Нужен функционал администратора, который может управлять подпиской/отпиской? – не нужен</li>
+            <li>Как осуществляется отписка от новых поступлений? – это не требуется</li>
+            <li>По тестовому заданию нужна БД MySQL. Можно прислать в виде файлов, но без директорий runtime и vendor. Дамп БД не нужен, нужны миграции.</li>
+        </ul>
+        </div>
     </div>
 </div>

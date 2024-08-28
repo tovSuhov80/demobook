@@ -22,20 +22,19 @@ use yii\db\Expression;
  */
 class Book extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName(): string
     {
-        return 'books';
+        return '{{%books}}';
     }
 
     public function rules(): array
     {
         return [
-            [['user_id', 'release_year'], 'integer'],
+            [['title', 'isbn', 'release_year'], 'required'],
             [['title', 'description'], 'string'],
+            [['release_year'], 'integer'],
             [['isbn'], 'string', 'max' => 18],
+            [['photo_url'], 'url'],
         ];
     }
 
@@ -58,7 +57,7 @@ class Book extends \yii\db\ActiveRecord
             'isbn' => 'ISBN',
             'title' => 'Title',
             'description' => 'Description',
-            'release_year' => 'Release Year',
+            'release_year' => 'Year',
         ];
     }
 
@@ -73,6 +72,6 @@ class Book extends \yii\db\ActiveRecord
     public function getAuthors(): ActiveQuery
     {
         return $this->hasMany(Author::class, ['id' => 'author_id'])
-            ->viaTable('book_authors', ['book_id' => 'id']);
+            ->viaTable('{{%book_authors}}', ['book_id' => 'id']);
     }
 }

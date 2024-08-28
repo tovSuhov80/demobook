@@ -42,6 +42,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'report/<year:\d+>' => 'report/index',
+                'book/<year:\d+>' => 'book/index',
             ],
         ],
         'userService' => [
@@ -49,6 +50,9 @@ $config = [
         ],
         'authorService' => [
             'class' => 'app\services\AuthorService',
+        ],
+        'bookService' => [
+            'class' => 'app\services\BookService',
         ],
     ],
     'params' => $params,
