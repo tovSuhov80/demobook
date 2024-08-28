@@ -1,5 +1,5 @@
 DOCKER_COMPOSE?=docker-compose
-RUN=$(DOCKER_COMPOSE) run --rm php
+RUN=$(DOCKER_COMPOSE) run --rm demobook-php
 EXEC?=docker exec -it demobook-php
 COMPOSER=$(EXEC) composer
 DB_WAIT=$(EXEC) php -r "echo \"Waiting for db...\n\";sleep(5);"
@@ -21,7 +21,7 @@ start:
 stop:
 	$(DOCKER_COMPOSE) stop
 
-docker-compose-clear:
+uninstall:
 	$(DOCKER_COMPOSE) down --rmi all
 
 migrate:
@@ -46,7 +46,8 @@ clear:
 
 perm: clear
 	sudo chmod -R 777 runtime
-	sudo chmod -R 666 migrations/*
+	sudo chmod -R 777 web/assets
+	sudo chmod -R 666 migrations/*.php
 	sudo chmod 777 migrations
 
 ##Makefile.local

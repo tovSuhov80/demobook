@@ -14,7 +14,9 @@ class m240827_150636_create_authors_table extends Migration
     {
         $this->createTable('{{%authors}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(128)->notNull(),
+            'first_name' => $this->string(64)->notNull(),
+            'last_name' => $this->string(64)->notNull(),
+            'middle_name' => $this->string(64)->null(),
         ],'CHARACTER SET utf8');
     }
 
