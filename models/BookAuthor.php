@@ -6,7 +6,6 @@ use Yii;
 
 /**
  *
- * @property int $id
  * @property int $book_id
  * @property int $author_id
  *

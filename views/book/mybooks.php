@@ -21,6 +21,10 @@ $placeholderImage = Url::to('@web/images/placeholder.jpg');
 
                 <h1><?= Html::encode($this->title) ?></h1>
 
+                <div class="form-group">
+                    <?= Html::a(Yii::t('app', 'Добавить книгу'), '/book/add',['class' => 'btn btn-success']) ?>
+                </div>
+
                 <?php Pjax::begin(); ?>
 
                 <?= GridView::widget([
@@ -54,6 +58,15 @@ $placeholderImage = Url::to('@web/images/placeholder.jpg');
                         'isbn',
                         [
                             'class' => 'yii\grid\ActionColumn',
+                            'urlCreator' => function ($action, $model, $key, $index) {
+                                if ($action === 'update') {
+                                    return Url::to("/book/edit/{$model->id}");
+                                }
+                                if ($action === 'delete') {
+                                    return Url::to("/book/delete/{$model->id}");
+                                }
+                                return '#';
+                            },
                             'template' => '{update} {delete}'
                         ],
                     ],

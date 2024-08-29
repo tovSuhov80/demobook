@@ -43,10 +43,9 @@ class m240827_163524_fill_csv_data extends Migration
         //books-authors
         $csvData = $this->parseCsvToArray($csvDataPath.'book_authors.csv');
         foreach ($csvData as $data) {
-            $this->execute("INSERT INTO {{%book_authors}} (id, book_id, author_id) 
-    values (:id, :book_id, :author_id);",
+            $this->execute("INSERT INTO {{%book_authors}} (book_id, author_id) 
+    values (:book_id, :author_id);",
                 [
-                    ':id' => $data['id'],
                     ':book_id' => $data['book_id'],
                     ':author_id' => $data['author_id']
                 ]);

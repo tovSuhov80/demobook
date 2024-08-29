@@ -47,7 +47,10 @@ $placeholderImage = Url::to('@web/images/placeholder.jpg');
                             'value' => function ($model) use ($placeholderImage) {
                                 // Если photo_url не задан, используем заглушку
                                 $photoUrl = $model->photo_url ?: $placeholderImage;
-                                return Html::img($photoUrl, ['style' => 'height: 150px; width: auto;']);
+                                return Html::img($photoUrl, ['style' => 'height: 150px; width: auto;'])
+                                    . Html::tag('br')
+                                    .Html::a(Yii::t('app', 'Подписаться'), '/subscribe/'.$model->id,
+                                        ['title' => Yii::t('app', 'Подписаться на книги этого автора')]);
                             },
                         ],
                         'title',

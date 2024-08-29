@@ -70,6 +70,21 @@ class Author extends \yii\db\ActiveRecord
         return $author;
     }
 
+    public static function findByInstance(?self $author): ?self
+    {
+        if (null === $author) {
+            return null;
+        }
+
+        /** @var self|null $result */
+        $result = self::find()->where([
+            'first_name' => $author->first_name,
+            'last_name' => $author->last_name,
+            'middle_name' => $author->middle_name,
+        ])->one();
+        return $result;
+    }
+
     public function getBookAuthors(): ActiveQuery
     {
         return $this->hasMany(BookAuthor::class, ['author_id' => 'id']);

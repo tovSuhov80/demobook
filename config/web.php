@@ -1,5 +1,8 @@
 <?php
 
+use app\components\Notificator;
+use app\components\senders\SmsPilotSenderService;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -7,7 +10,7 @@ $config = [
     'id' => 'Demobook',
     'name' => 'DemoBook',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'app\components\SetUp'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -23,6 +26,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['/user/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -41,10 +45,20 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<controller>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
                 'report/<year:\d+>' => 'report/index',
                 'book/<year:\d+>' => 'book/index',
+                'subscribe/<id:\d+>' => 'subscribe/add',
             ],
         ],
+
+        'notificator' => [
+            'class' => Notificator::class,
+            'senders' => [
+                SmsPilotSenderService::class,
+            ]
+        ],
+
         'userService' => [
             'class' => 'app\services\UserService',
         ],
@@ -53,6 +67,9 @@ $config = [
         ],
         'bookService' => [
             'class' => 'app\services\BookService',
+        ],
+        'subscribeService' => [
+            'class' => 'app\services\SubscribeService',
         ],
     ],
     'params' => $params,

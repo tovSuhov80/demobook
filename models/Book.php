@@ -2,13 +2,14 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "books".
+
  *
  * @property int $id
  * @property int $user_id
@@ -55,9 +56,10 @@ class Book extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'isbn' => 'ISBN',
-            'title' => 'Title',
-            'description' => 'Description',
-            'release_year' => 'Year',
+            'title' => Yii::t('app', 'Название'),
+            'description' => Yii::t('app', 'Описание'),
+            'release_year' => Yii::t('app', 'Год'),
+            'photo_url' => Yii::t('app', 'Ссылка на изображение обложки')
         ];
     }
 
@@ -73,5 +75,14 @@ class Book extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Author::class, ['id' => 'author_id'])
             ->viaTable('{{%book_authors}}', ['book_id' => 'id']);
+    }
+
+    public function getAuthorsAsString(): string
+    {
+        $result = [];
+        foreach ($this->authors as $author) {
+            $result[] = $author->getFullName();
+        }
+        return implode(', ', $result);
     }
 }

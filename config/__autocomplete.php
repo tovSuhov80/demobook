@@ -24,6 +24,9 @@ class Yii {
  * @property app\services\AuthorService $authorService
  * @property app\services\UserService $userService
  * @property app\services\BookService $bookService
+ * @property app\components\EventDispatcher $eventDispatcher
+ * @property app\components\Notificator $notificator
+ * @property app\services\SubscribeService $subscribeService
  *
  */
 class __Application {

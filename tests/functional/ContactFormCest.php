@@ -27,11 +27,11 @@ class ContactFormCest
     public function submitFormWithIncorrectEmail(\FunctionalTester $I)
     {
         $I->submitForm('#contact-form', [
-            'ContactForm[name]' => 'tester',
-            'ContactForm[email]' => 'tester.email',
-            'ContactForm[subject]' => 'test subject',
-            'ContactForm[body]' => 'test content',
-            'ContactForm[verifyCode]' => 'testme',
+            'SubscribeForm[name]' => 'tester',
+            'SubscribeForm[email]' => 'tester.email',
+            'SubscribeForm[subject]' => 'test subject',
+            'SubscribeForm[body]' => 'test content',
+            'SubscribeForm[verifyCode]' => 'testme',
         ]);
         $I->expectTo('see that email address is wrong');
         $I->dontSee('Name cannot be blank', '.help-inline');
@@ -44,11 +44,11 @@ class ContactFormCest
     public function submitFormSuccessfully(\FunctionalTester $I)
     {
         $I->submitForm('#contact-form', [
-            'ContactForm[name]' => 'tester',
-            'ContactForm[email]' => 'tester@example.com',
-            'ContactForm[subject]' => 'test subject',
-            'ContactForm[body]' => 'test content',
-            'ContactForm[verifyCode]' => 'testme',
+            'SubscribeForm[name]' => 'tester',
+            'SubscribeForm[email]' => 'tester@example.com',
+            'SubscribeForm[subject]' => 'test subject',
+            'SubscribeForm[body]' => 'test content',
+            'SubscribeForm[verifyCode]' => 'testme',
         ]);
         $I->seeEmailIsSent();
         $I->dontSeeElement('#contact-form');

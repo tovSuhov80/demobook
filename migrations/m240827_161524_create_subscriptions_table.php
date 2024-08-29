@@ -16,6 +16,7 @@ class m240827_161524_create_subscriptions_table extends Migration
         ]);
 
         $this->createIndex('idx-subscriptions-author_id', '{{%subscriptions}}', 'author_id');
+        $this->createIndex('idx-subscriptions-author_id-phone', '{{%subscriptions}}', ['author_id', 'phone'], true);
     }
 
     /**
