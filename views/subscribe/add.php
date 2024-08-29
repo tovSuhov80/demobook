@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /* @var $book app\models\Book */
 /* @var $authors app\models\Author[] */
 
-$this->title = 'Subscribe to Authors';
+$this->title = 'Подписка на авторов';
 $this->params['breadcrumbs'][] = ['label' => 'Книги', 'url' => '/book'];
 $this->params['breadcrumbs'][] = $this->title;
 
