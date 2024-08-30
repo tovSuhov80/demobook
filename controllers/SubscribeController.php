@@ -25,24 +25,25 @@ class SubscribeController extends Controller
      * @throws Exception
      * @throws NotFoundHttpException
      */
-    public function actionAdd(int $id)
+    public function actionAdd(int $id): \yii\web\Response|string
     {
         $book = Yii::$app->bookService->getBookOrFail($id);
 
         $authors = $book->authors; // Получаем авторов книги
         $authorNames = [];
         foreach ($authors as $author) {
-            $authorNames[] = $author->getFullName();
+            $authorNames[$author->id] = $author->getFullName();
         }
 
         $model = new SubscribeForm();
-        $model->authorNames = $authorNames;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
             $successCount = 0;
-            foreach ($model->authorNames as $idx => $authorName) {
+
+            foreach ($model->authorNames as $authorId => $authorName) {
                 if (empty($authorName)) continue;
-                if (Yii::$app->subscribeService->subscribeToAuthor($authorNames[$idx] ?? '', $model->phone)) {
+                if (Yii::$app->subscribeService->subscribeToAuthor($authorId, $model->phone)) {
                     $successCount++;
                 }
             }
@@ -53,6 +54,9 @@ class SubscribeController extends Controller
             }
             return $this->redirect('/book');
         }
+
+        $model->authorNames = $authorNames;
+        $model->verifyCode = '';
 
         return $this->render('add', [
             'model' => $model,

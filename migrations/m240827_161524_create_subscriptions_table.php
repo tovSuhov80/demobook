@@ -15,7 +15,16 @@ class m240827_161524_create_subscriptions_table extends Migration
             'author_id' => $this->integer()->notNull(),
         ]);
 
-        $this->createIndex('idx-subscriptions-author_id', '{{%subscriptions}}', 'author_id');
+        $this->addForeignKey(
+            'fk-subscriptions-author_id',
+            '{{%subscriptions}}',
+            'author_id',
+            '{{%authors}}',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
         $this->createIndex('idx-subscriptions-author_id-phone', '{{%subscriptions}}', ['author_id', 'phone'], true);
     }
 

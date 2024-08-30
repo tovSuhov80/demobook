@@ -14,7 +14,7 @@ class m240827_151008_create_books_table extends Migration
     {
         $this->createTable('{{%books}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer()->null(),
             'isbn' => $this->string(18)->notNull()->unique(),
             'title' => $this->text()->notNull(),
             'description' => $this->text()->null(),
@@ -25,7 +25,15 @@ class m240827_151008_create_books_table extends Migration
 
         ],'CHARACTER SET utf8');
 
-        $this->createIndex('idx-books-user_id', '{{%books}}', 'user_id');
+        $this->addForeignKey(
+            'fk-books-user_id',
+            '{{%books}}',
+            'user_id',
+            '{{%users}}',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
         $this->createIndex('idx-books-release_year', '{{%books}}', 'release_year');
     }
 

@@ -23,13 +23,14 @@ class BookService
         $book->setAttributes($bookForm->getAttributes());
         $book->user_id = $userId;
 
+        $newAuthors = [];
+        $oldAuthors = [];
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
 
             if (null !== $bookId && $oldBook = Book::findOne($bookId)) {
-                foreach ($oldBook->authors as $author) {
-                    $oldBook->unlink('authors', $author, true);
-                }
+                $oldAuthors = $oldBook->getAuthors()->indexBy('id')->all();
             }
 
             if ($book->save()) {
@@ -46,10 +47,22 @@ class BookService
                         $author = $formAuthor;
                     }
 
-                    // Сохранение связи книги и автора
-                    if (null !== $author) {
-                        $book->link('authors', $author);
+                    if (!isset($oldAuthors[$author->id])) { //это новый автор
+                        $newAuthors[] = $author;
+                    } else {
+                        //удаляем из массива старой версии текущего автора
+                        unset($oldAuthors[$author->id]);
                     }
+                }
+
+                // Сохраняем связи с новыми авторами
+                foreach ($newAuthors as $newAuthor) {
+                    $book->link('authors', $newAuthor);
+                }
+
+                //в $oldAuthors остались авторы, отсутствующие в новой версии исправления, удаляем эти связи
+                foreach ($oldAuthors as $oldAuthor) {
+                    $book->unlink('authors', $oldAuthor, true);
                 }
 
                 if ($book->getAuthors()->count() === 0) {

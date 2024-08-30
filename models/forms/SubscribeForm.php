@@ -18,13 +18,29 @@ class SubscribeForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
             [['authorNames', 'phone'], 'required'],
+            ['authorNames', 'validateAuthorNames'],
             [['authorNames'], 'each', 'rule' => ['string']],
             [['phone'], 'string', 'min' => 10, 'max' => 15],
-            // verifyCode needs to be entered correctly
             ['verifyCode', 'captcha'],
         ];
+    }
+
+    public function validateAuthorNames($attribute, $params)
+    {
+        $hasError = true;
+        if (!empty($this->$attribute) && is_array($this->$attribute)) {
+            foreach ($this->$attribute as $value) {
+                if (!empty($value)) {
+                    $hasError = false;
+                    break;
+                }
+            }
+        }
+
+        if ($hasError) {
+            $this->addError($attribute, 'Необходимо отметить хотя бы одного автора.');
+        }
     }
 
     public function attributeLabels()

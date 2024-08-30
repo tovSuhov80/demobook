@@ -1,6 +1,7 @@
 <?php
 
-use app\models\SignupForm;
+use app\models\forms\SignupForm;
+use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -18,6 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
             <?= $form->field($model, 'username')->textInput() ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
+                'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+            ]) ?>
+
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app','Регистрация'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>

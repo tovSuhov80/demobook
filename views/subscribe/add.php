@@ -47,6 +47,7 @@ $placeholderImage = Url::to('@web/images/placeholder.jpg');
 
     <!-- Поле для ввода номера телефона -->
     <?= $form->field($model, 'phone')->textInput(['maxlength' => 15, 'style' => 'width: 200px;']) ?>
+
     <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
         'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
     ]) ?>

@@ -16,19 +16,14 @@ class SubscribeService
     /**
      * @throws Exception
      */
-    public function subscribeToAuthor(string $authorName, string $phone): bool
+    public function subscribeToAuthor(int $authorId, string $phone): bool
     {
-        if (empty(trim($authorName)) || empty(trim($phone))) {
-            return false;
-        }
-
-        $author = Author::findByInstance(Author::fromString($authorName));
-        if (empty($author)) {
+        if (empty(trim($phone))) {
             return false;
         }
 
         $subscriber = new Subscriber();
-        $subscriber->author_id = $author->id;
+        $subscriber->author_id = $authorId;
         $subscriber->phone = $phone;
 
         return $subscriber->validate() && $subscriber->save();

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
 use Yii;
 use yii\base\Model;
@@ -13,6 +13,8 @@ class SignupForm extends Model
 
     public $username;
     public $password;
+    public $verifyCode;
+
 
     /**
      * @inheritdoc
@@ -26,6 +28,8 @@ class SignupForm extends Model
             ['username', 'string', 'min' => 3, 'max' => 128],
             ['password', 'required', 'message' => Yii::t('app','Поле не должно быть пустым')],
             ['password', 'string', 'min' => 6, 'message' => Yii::t('app', 'Пароль должен содержать минимум 6 символов')],
+            ['verifyCode', 'captcha'],
+
         ];
     }
 
@@ -38,6 +42,7 @@ class SignupForm extends Model
         return [
             'username' => Yii::t('app', 'Логин'),
             'password' => Yii::t('app', 'Пароль'),
+            'verifyCode' => Yii::t('app', 'Проверочный код'),
         ];
     }
 }
