@@ -2,14 +2,11 @@
 
 namespace app\controllers;
 
-use app\components\events\BookAddedEvent;
-use app\models\Book;
 use app\models\forms\BookForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -56,7 +53,6 @@ class BookController extends Controller
 
     public function actionMy(): string
     {
-
         $dataProvider = new ActiveDataProvider([
             'query' => Yii::$app->bookService->getBooksByUserId(Yii::$app->user->id),
             'pagination' => [
@@ -122,6 +118,7 @@ class BookController extends Controller
     {
         $book = Yii::$app->bookService->getBookOrFail($id);
         Yii::$app->bookService->assertBookAccess($book);
+
         if (Yii::$app->bookService->deleteBook($book)) {
             Yii::$app->session->setFlash('success', "Книга \"".Html::encode($book->title)."\" была удалена.");
             return $this->redirect(['my']);
@@ -129,6 +126,5 @@ class BookController extends Controller
             throw new ServerErrorHttpException("Ошибка удаления книги");
         }
     }
-
 
 }
